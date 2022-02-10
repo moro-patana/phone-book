@@ -7,33 +7,59 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function FormDialog({open, handleOpen, handleClose}) {
-  
+export default function FormDialog({ open, handleClose, saveRecord }) {
 
-  return (
-    <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+    const [firstName, setFirstName] = React.useState('')
+    const [lastName, setLastName] = React.useState('')
+    const [phoneNumber, setPhoneNumber] = React.useState('')
+
+    const handleSave = React.useCallback(() => {
+        saveRecord(firstName, lastName, phoneNumber)
+    }, [firstName, lastName, phoneNumber])
+
+    return (
+        <div>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Add a Phone Book</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="firstName"
+                        label="First Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="lastName"
+                        label="Last Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e) => setLastName(e.target.value)}
+
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="phoneNumber"
+                        label="Phone Number"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSave}>Save</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
 }
